@@ -6,15 +6,20 @@ Solving first with Vanilla JS in non-graphical form
 let mazeDisplay = document.getElementById("maze-display");
 let mazeSolution = document.getElementById("maze-solution");
 
-let restartButton = document.getElementById("restart-btn");
+let solveButton = document.getElementById("solve-btn");
 
 let grid = [];
 let maze;
 let numRows, numCols;
 let stack = new Stack();
+let isSolved = false; 
 
 const input = document.querySelector('input[type="file"]')
 
+
+solveButton.onclick = function() {
+    mazeSolution.appendChild(getMazeElement());
+}
 input.addEventListener('change', function(e) {
     console.log(input.files);
     const reader = new FileReader();
@@ -33,7 +38,7 @@ input.addEventListener('change', function(e) {
     maze = new Maze(grid);
     console.log(maze.toString());
     const solver = new MazeSolver(maze);
-    drawMaze();
+    mazeDisplay.appendChild(getMazeElement());
  
     if (solver.traverse())
        console.log("The maze was successfully traversed!");
@@ -41,15 +46,22 @@ input.addEventListener('change', function(e) {
        console.log("There is no possible path.");
  
     console.log(maze.toString());
-    drawMaze();
+ 
+       
+
+    
+   
+
 
     }
     reader.readAsText(input.files[0]);
 
 }, false)
 
-const drawMaze = () =>
-{
+const getMazeElement = () =>
+{   
+    let mazeElement = document.createElement("div");
+
     for (let row = 0; row < maze.grid.length; row++)
     {
         let rowElement = document.createElement("div");
@@ -76,10 +88,10 @@ const drawMaze = () =>
             }
             rowElement.appendChild(square);
         }
-        mazeDisplay.appendChild(rowElement);
+        mazeElement.appendChild(rowElement);
     }
     
-
+    return mazeElement;
 }
  
 

@@ -12,10 +12,16 @@
 </head>
 <body>
     <h1>Maze Solver</h1>
-    <input type="file" />
+    
     <div id = "maze-container">
-        <div class = "maze" id="maze-display"></div>
-        <div class = "maze" id="maze-solution"></div>
+        <div id = "maze-container-left"> 
+            <input type="file" />  
+            <div class = "maze" id="maze-display"></div>
+        </div>
+        <div id = "maze-container-right"> 
+            <button id="solve-btn">Solve</button>      
+            <div class = "maze" id="maze-solution"></div>
+        </div>
     </div>
     
     <script src="js/Position.js"></script>
