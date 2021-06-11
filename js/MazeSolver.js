@@ -62,7 +62,8 @@ class MazeSolver
 	 */
 	pushNewPos(x,  y, stack)
 	{
-		let npos = new Position();
+		console.log ("==> ", x, ", ", y);
+      let npos = new Position();
 		npos.setx(x);
 		npos.sety(y);
 		if (this.maze.validPosition(x,y))
