@@ -5,7 +5,6 @@ Solving first with Vanilla JS in non-graphical form
 
 let mazeDisplay = document.getElementById("maze-display");
 let mazeSolution = document.getElementById("maze-solution");
-
 let solveButton = document.getElementById("solve-btn");
 
 let grid = [];
@@ -37,10 +36,10 @@ input.addEventListener('change', function(e) {
    console.log (grid);
     maze = new Maze(grid);
     console.log(maze.toString());
-    const solver = new MazeSolver(maze);
+    let solver = new MazeSolver2(maze);
     mazeDisplay.appendChild(getMazeElement());
  
-    if (solver.traverse())
+    if (solver.traverse(0, 0))
        console.log("The maze was successfully traversed!");
     else
        console.log("There is no possible path.");
@@ -61,6 +60,7 @@ input.addEventListener('change', function(e) {
 const getMazeElement = () =>
 {   
     let mazeElement = document.createElement("div");
+    mazeElement.classList.add("maze-image");
 
     for (let row = 0; row < maze.grid.length; row++)
     {
