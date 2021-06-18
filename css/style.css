@@ -11,11 +11,15 @@ body{
   color: black;
 }
 
-#maze-container{
+#mazes-container{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 
+}
+
+.maze-container{
+  padding-top: 15px;
 }
 
 .maze{
