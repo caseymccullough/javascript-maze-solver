@@ -18,17 +18,24 @@
             <input type="file" />  
             <div class = "maze" id="maze-display"></div>
         </div>
-        <div id = "maze-container-right"> 
-            <button id="solve-btn">Solve</button>      
-            <div class = "maze" id="maze-solution"></div>
+        <div id = "maze-container-center"> 
+            <button id="stack-solve-btn">Solve with Stack</button>  
+            <div class = "maze" id="stack-maze-solution"></div>
+            <div class = "results-container" id="stack-results-container"></div>
         </div>
+        <div id = "maze-container-right"> 
+            <button id="recursive-solve-btn">Solve Recursively</button>      
+            <div class = "maze" id="recursive-maze-solution"></div>
+            <div class = "results-container" id="recursive-results-container"></div>
+        </div>
+    </div>
     </div>
     
     <script src="js/Position.js"></script>
     <script src="js/Stack.js"></script>
     <script src="js/Maze.js"></script>
-    <script src="js/MazeSolver.js"></script>
-    <script src="js/MazeSolver2.js"></script>
+    <script src="js/StackMazeSolver.js"></script>
+    <script src="js/RecursiveMazeSolver.js"></script>
     <script src="js/script.js"></script>
 
 </body>

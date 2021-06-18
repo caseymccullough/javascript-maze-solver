@@ -8,7 +8,7 @@
  * @author Java Foundations
  * @version 4.0
  */
-class MazeSolver
+class StackMazeSolver
 {
 
 	/**

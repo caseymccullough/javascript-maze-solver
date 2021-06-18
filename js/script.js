@@ -4,86 +4,129 @@ Solving first with Vanilla JS in non-graphical form
 */
 
 let mazeDisplay = document.getElementById("maze-display");
-let mazeSolution = document.getElementById("maze-solution");
-let solveButton = document.getElementById("solve-btn");
+let recursiveMazeSolution = document.getElementById("recursive-maze-solution");
+let stackMazeSolution = document.getElementById("stack-maze-solution");
+
+let stackSolveButton = document.getElementById("stack-solve-btn");
+let recursiveSolveButton = document.getElementById("recursive-solve-btn");
+
+let stackResults = document.getElementById("stack-results-container");
+let recursiveResults = document.getElementById("recursive-results-container")
+
+const SOLVED = "The maze was solved successfully";
+const UNSOLVABLE = "The maze cannot be solved";
 
 let grid = [];
+let stackGrid;
+let recursiveGrid;
+
 let maze;
 let numRows, numCols;
 let stack = new Stack();
 let isSolved = false; 
 
-const input = document.querySelector('input[type="file"]')
+const input = document.querySelector('input[type="file"]');
 
-
-solveButton.onclick = function() {
-    mazeSolution.appendChild(getMazeElement());
-}
 input.addEventListener('change', function(e) {
+
+    clearPrevious();
     console.log(input.files);
     const reader = new FileReader();
     reader.onload = function() {
-        grid = reader.result.split('\n').map(function(line){
-            return line.split(" ").map(x => parseInt(x))
-        });
-    numRows = parseInt(grid[0][0]);
-    numCols = parseInt(grid[0][1]);
+            grid = reader.result.split('\n').map(function(line){
+                return line.split(" ").map(x => parseInt(x))
+            });
+        numRows = parseInt(grid[0][0]);
+        numCols = parseInt(grid[0][1]);
 
-    //console.log ("r, c", numRows, " ", numCols);
-    grid = grid.slice(1, -1); // removes first and last rows of the grid array.  
-   // console.log(grid);
-   console.log ("grid: ");
-   console.log (grid);
-    maze = new Maze(grid);
-    console.log(maze.toString());
-    let solver = new MazeSolver2(maze);
-    mazeDisplay.appendChild(getMazeElement());
- 
-    if (solver.traverse(0, 0))
-       console.log("The maze was successfully traversed!");
-    else
-       console.log("There is no possible path.");
- 
-    console.log(maze.toString());
- 
-       
+        grid = grid.slice(1, -1); // removes first and last rows of the grid array.  
 
-    
-   
+        stackGrid = grid.map(function(arr){
+            return arr.slice();
+        })
 
+        recursiveGrid = grid.map(function(arr){
+            return arr.slice();
+        })
 
+        console.log ("grid: ");
+        console.log (grid);
+        
+        maze = new Maze(grid);
+        
+        mazeDisplay.appendChild(getMazeElement(grid));
     }
     reader.readAsText(input.files[0]);
-
 }, false)
 
-const getMazeElement = () =>
+stackSolveButton.onclick = function() {
+    
+    stackMaze = new Maze (stackGrid);
+    let stackSolver = new StackMazeSolver(stackMaze);
+    
+    console.log ("STACK");
+    const wasSolved = stackSolver.traverse();
+
+    /* Post announcement for solved/ unsolvable */
+    let resultsMsg = document.createElement("H3");
+    resultsText = wasSolved ? SOLVED : UNSOLVABLE; 
+    let textElement = document.createTextNode(resultsText);
+    resultsMsg.appendChild(textElement);
+    resultsMsg.classList.add ("results-text", wasSolved ? "green-text" : "red-text");  
+    stackResults.appendChild(resultsMsg);
+
+    stackMazeSolution.appendChild(getMazeElement(stackGrid));
+    console.log(stackMaze.toString());
+}
+
+recursiveSolveButton.onclick = function() {
+    
+    recursiveMaze = new Maze (recursiveGrid);
+    let recursiveSolver = new RecursiveMazeSolver(recursiveMaze);
+
+    console.log ("RECURSIVE");
+    const wasSolved = recursiveSolver.traverse(0, 0);
+
+    /* Post announcement for solved/ unsolvable */
+    let resultsMsg = document.createElement("H3");
+    resultsText = wasSolved ? SOLVED : UNSOLVABLE; 
+    let textElement = document.createTextNode(resultsText);
+    resultsMsg.appendChild(textElement);
+    resultsMsg.classList.add ("results-text", wasSolved ? "green-text" : "red-text");  
+    recursiveResults.appendChild(resultsMsg);
+    
+    recursiveMazeSolution.appendChild(getMazeElement(recursiveGrid));
+    console.log(recursiveMaze.toString());
+}
+
+
+const getMazeElement = (mazeGrid) =>
 {   
     let mazeElement = document.createElement("div");
     mazeElement.classList.add("maze-image");
 
-    for (let row = 0; row < maze.grid.length; row++)
+    for (let row = 0; row < mazeGrid.length; row++)
     {
         let rowElement = document.createElement("div");
         rowElement.classList.add("row");
 
-        for (let col = 0; col < maze.grid[row].length; col++)
+        for (let col = 0; col < mazeGrid[row].length; col++)
         {
             let square = document.createElement("div");
             square.classList.add("square");
 
-            if (grid[row][col] === 0)
+            if (mazeGrid[row][col] === 0)
             {
                 square.classList.add("black");
             }
-            else if (grid[row][col] === 1) {
+            else if (mazeGrid[row][col] === 1) {
 
                 square.classList.add ("white");  
             }
-            else if (grid[row][col] === 2){
+            else if (mazeGrid[row][col] === 2){
                 square.classList.add ("red");  
             }
-            else if (grid[row][col] === 3){
+            else if (mazeGrid[row][col] === 3){
                 square.classList.add ("gold");  
             }
             rowElement.appendChild(square);
@@ -93,42 +136,25 @@ const getMazeElement = () =>
     
     return mazeElement;
 }
+/* 
+    removes all images and text associated with previous maze.
+*/
+const clearPrevious = () => {
+    while (mazeDisplay.firstChild)
+        mazeDisplay.removeChild(mazeDisplay.firstChild);
+    while (stackMazeSolution.firstChild)
+        stackMazeSolution.removeChild(stackMazeSolution.firstChild);
+    while (recursiveMazeSolution.firstChild)
+        recursiveMazeSolution.removeChild(recursiveMazeSolution.firstChild);
+    while (stackResults.firstChild)
+        stackResults.removeChild(stackResults.firstChild);
+    while (recursiveResults.firstChild){
+        recursiveResults.removeChild(recursiveResults.firstChild);
+    }
+    
+}
  
 
 
      
 
-
-        // const processSquareSelection = (event) => {
-
-        //     // option to play sound
-        //     if (dingSoundOn) {
-        //         dingSound.play();
-        //     }
-
-        //     const location = event.target.id;
-
-
-        //     console.log("target: " + location);
-        //     console.log("element: " + document.getElementById(location));
-
-        //     /* make square  unclickable */
-        //     //document.getElementById(location).removeEventListener("click", processSquareSelection);
-
-        //     /* id has format "r#c#" */
-        //     let rowClicked = location.charAt(1);
-        //     let colClicked = location.charAt(3);
-
-        //     console.log("Square played at (" + rowClicked + " , " + colClicked + ")");
-
-        //     // change grid for given row and column
-        //     grid[rowClicked][colClicked] = currentPlayer;
-        //     flipTiles(rowClicked, colClicked);
-
-
-
-        //     updateHTML();
-        // }
-
-
-       // init();

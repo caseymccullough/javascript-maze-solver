@@ -5,7 +5,7 @@
 body{
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: auto;
   background-color:antiquewhite(90, 98, 100);
   color: black;
@@ -43,8 +43,8 @@ body{
 }
 
 .square{
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
 }
 
 .black{
@@ -61,4 +61,18 @@ body{
 
 .gold{
   background-color:gold;
+}
+
+.results-text{
+  background-color: darkgray;
+  padding: 10px;
+  width: 60%;
+  margin: auto;
+}
+.green-text{
+  color: green; 
+}
+
+.red-text{
+  color: red;
 }

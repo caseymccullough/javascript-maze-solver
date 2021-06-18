@@ -6,7 +6,7 @@
  * Graphical representation by Casey McCullough
  * 
  */
- class MazeSolver2
+ class RecursiveMazeSolver
  {
     /**
      * Constructor for the MazeSolver class.
@@ -28,6 +28,8 @@
     traverse(row, col)
     {
       console.log ("(", row, ", ", col, ")");
+      console.log (this.maze.toString());
+      
       let done = false;
       if (this.maze.validPosition(row, col))
       {
