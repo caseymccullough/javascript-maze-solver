@@ -26,8 +26,15 @@ body{
 
   width: 400px; 
   height: 400px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid lightgray;
+  padding: 10px;
   background-color: darkgray;
-  border: white 2px solid;
+ 
 
 }
 
