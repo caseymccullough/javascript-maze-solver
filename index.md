@@ -1,5 +1,8 @@
 ## Welcome to Maze-Solver
 
+![Solved Image](/img/maze3-solved.jpg)
+Format: ![Alt Text](url)
+
 You can use the [editor on GitHub](https://github.com/caseymccullough/vanilla-js-maze-solver/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
