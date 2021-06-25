@@ -27,36 +27,38 @@
      */
     traverse(row, col)
     {
-      console.log ("(", row, ", ", col, ")");
-      console.log (this.maze.toString());
-      
-      let done = false;
-      if (this.maze.validPosition(row, col))
-      {
-         console.log ("a valid position");
-         this.maze.tryPosition(row, col); // (row, col) marked as tried
-         
-         if (row == this.maze.getRows()-1 && col == this.maze.getColumns()-1)
-         {
-            done = true;  // the maze is solved
-         }
-         else {
-            done = this.traverse(row + 1, col); // down
-            if (!done){
-               done = this.traverse (row, col + 1); // right
+       let done = false;
+       if (this.maze.validPosition(row, col)){
+          console.log ("a valid position");
+
+          this.maze.tryPosition(row, col);
+
+          if (row === this.maze.getRows() - 1 && col === this.maze.getColumns() - 1){
+             done = true;
+          }
+          else{
+             done = this.traverse(row + 1, col); // down
+
+             if (!done){
+                done = this.traverse(row, col + 1); // right
+             }
+             if (!done){
+               done = this.traverse(row - 1, col); // up
             }
             if (!done){
-               done = this.traverse (row - 1, col); // up
+               done = this.traverse(row, col - 1); // left
             }
-            if (!done){
-               done = this.traverse (row, col - 1); // left
-            }   
-         }
-         if (done){
-            this.maze.markPath(row, col);
-         }
-         return done;    
-      }
- 
-   }
+
+          }
+
+          if (done)
+          {
+             this.maze.markPath(row, col);
+          }
+
+          return done;
+
+       }
+    }
+     
  } 
